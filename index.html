@@ -331,7 +331,7 @@
     <script>
     (function () {
 
-        const whatsappNumber = '972567845326';
+        const whatsappNumber = '97256734148';
 
         const whatsappMessage =
             'مرحباً، لقد صادفت اعلانك على TikTok وأود معرفة المزيد؟';
@@ -376,8 +376,8 @@
 
                             localStorage.setItem(trackingStorageKey, 'true');
 
-                            // إرسال الإشارتين مرة واحدة فقط
-                            window.ttq.track('ClickButton');
+                            // إرسال الأحداث المطلوبة
+                            window.ttq.track('InitiateCheckout');
                             window.ttq.track('Contact');
 
                         }
