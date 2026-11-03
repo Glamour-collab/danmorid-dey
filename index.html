@@ -463,180 +463,80 @@
   </div>
 
   <script>
-    const whatsappButton =
-      document.getElementById("whatsappButton");
+    const whatsappButton = document.getElementById("whatsappButton");
+    const centerWhatsappButton = document.getElementById("centerWhatsappButton");
 
-    const centerWhatsappButton =
-      document.getElementById("centerWhatsappButton");
-
-    /*
-      إنشاء Event ID فريد
-    */
     function generateEventId() {
-      return "event_" +
-        Date.now() +
-        "_" +
-        Math.random()
-          .toString(36)
-          .substr(2, 9);
+      return "event_" + Date.now() + "_" + Math.random().toString(36).substr(2, 9);
     }
 
-    /*
-      الحصول على ttclid
-    */
     function getTTCLID() {
       try {
-        const params =
-          new URLSearchParams(window.location.search);
-
-        const ttclid =
-          params.get("ttclid");
-
+        const params = new URLSearchParams(window.location.search);
+        const ttclid = params.get("ttclid");
         if (ttclid) {
-          localStorage.setItem(
-            "tiktok_ttclid",
-            ttclid
-          );
-
+          localStorage.setItem("tiktok_ttclid", ttclid);
           return ttclid;
         }
-
-        return localStorage.getItem(
-          "tiktok_ttclid"
-        ) || null;
-
+        return localStorage.getItem("tiktok_ttclid") || null;
       } catch (error) {
         return null;
       }
     }
 
-    /*
-      الحصول على _ttp
-    */
     function getTTP() {
       try {
-        const match =
-          document.cookie.match(
-            /(?:^|;\s*)_ttp=([^;]+)/
-          );
-
-        return match
-          ? decodeURIComponent(match[1])
-          : null;
-
+        const match = document.cookie.match(/(?:^|;\s*)_ttp=([^;]+)/);
+        return match ? decodeURIComponent(match[1]) : null;
       } catch (error) {
         return null;
       }
     }
 
-    /*
-      بيانات المستخدم
-    */
     function getTikTokUserData() {
       const user = {};
-
       const ttclid = getTTCLID();
       const ttp = getTTP();
-
-      if (ttclid) {
-        user.ttclid = ttclid;
-      }
-
-      if (ttp) {
-        user.ttp = ttp;
-      }
-
+      if (ttclid) user.ttclid = ttclid;
+      if (ttp) user.ttp = ttp;
       return user;
     }
 
-    /*
-      تسجيل ClickButton و Contact
-      على الزرين العلوي والسفلي
-    */
-    function trackWhatsAppClick() {
+    function handleWhatsAppClick(e) {
+      const eventIdClickButton = generateEventId();
+      const eventIdContact = generateEventId();
+      const userData = getTikTokUserData();
 
-      const eventIdClickButton =
-        generateEventId();
-
-      const eventIdContact =
-        generateEventId();
-
-      const eventData = {
-
-        source: "WhatsApp_Button"
-
-      };
-
-      /*
-        Browser Pixel
-      */
       if (window.ttq) {
-
         ttq.track(
           "ClickButton",
-
           Object.assign(
             {
-              event_id:
-                eventIdClickButton
-            },
-
-            eventData
-          )
+              source: "WhatsApp_Button",
+              ...userData
+            }
+          ),
+          {
+            event_id: eventIdClickButton
+          }
         );
 
         ttq.track(
           "Contact",
-
+          Object.assign({}, userData),
           {
-            event_id:
-              eventIdContact
+            event_id: eventIdContact
           }
         );
       }
     }
 
-    /*
-      منع الضغط المتكرر السريع
-    */
-    let whatsappClickLocked = false;
-
-    function handleWhatsAppClick(e) {
-
-      if (whatsappClickLocked) {
-        return;
-      }
-
-      whatsappClickLocked = true;
-
-      trackWhatsAppClick();
-
-      setTimeout(
-        () => {
-          whatsappClickLocked = false;
-        },
-        1500
-      );
-    }
-
-    /*
-      الزر العلوي
-    */
     if (centerWhatsappButton) {
-      centerWhatsappButton.addEventListener(
-        "click",
-        handleWhatsAppClick
-      );
+      centerWhatsappButton.addEventListener("click", handleWhatsAppClick);
     }
 
-    /*
-      الزر السفلي
-    */
     if (whatsappButton) {
-      whatsappButton.addEventListener(
-        "click",
-        handleWhatsAppClick
-      );
+      whatsappButton.addEventListener("click", handleWhatsAppClick);
     }
   </script>
 
