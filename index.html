@@ -7,7 +7,6 @@
   <title>Glamour Beauty - تواصل معنا</title>
   <meta name="description" content="تواصل معنا مباشرة في متجر سحر الجمال للحصول على المعلومات التي تحتاجها بسهولة.">
 
-  <!-- تسريع الاتصال المسبق بالخوادم الخارجية -->
   <link rel="dns-prefetch" href="//analytics.tiktok.com">
   <link rel="preconnect" href="https://analytics.tiktok.com" crossorigin>
 
@@ -15,9 +14,8 @@
   <script>
   !function (w, d, t) {
     w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
-  var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
-  ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
-
+    var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+    ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
 
     ttq.load('DBHALB3C77UF910635FG');
     ttq.page();
@@ -224,12 +222,10 @@
         transform: scale(1);
         opacity: 0.65;
       }
-
       70% {
         transform: scale(1.65);
         opacity: 0.16;
       }
-
       100% {
         transform: scale(1.9);
         opacity: 0;
@@ -398,14 +394,11 @@
 
     <header>
       <div class="header-inner">
-
         <div class="logo">
           <span class="logo-dot"></span>
           <span class="brand-name">Glamour Beauty</span>
         </div>
-
         <div class="header-button">تواصل معنا</div>
-
       </div>
     </header>
 
@@ -470,46 +463,36 @@
   </div>
 
   <script>
-
     const whatsappButton =
       document.getElementById("whatsappButton");
 
     const centerWhatsappButton =
       document.getElementById("centerWhatsappButton");
 
-
     /*
       إنشاء Event ID فريد
     */
     function generateEventId() {
-
       return "event_" +
         Date.now() +
         "_" +
         Math.random()
           .toString(36)
           .substr(2, 9);
-
     }
-
 
     /*
       الحصول على ttclid
     */
     function getTTCLID() {
-
       try {
-
         const params =
-          new URLSearchParams(
-            window.location.search
-          );
+          new URLSearchParams(window.location.search);
 
         const ttclid =
           params.get("ttclid");
 
         if (ttclid) {
-
           localStorage.setItem(
             "tiktok_ttclid",
             ttclid
@@ -523,21 +506,15 @@
         ) || null;
 
       } catch (error) {
-
         return null;
-
       }
-
     }
-
 
     /*
       الحصول على _ttp
     */
     function getTTP() {
-
       try {
-
         const match =
           document.cookie.match(
             /(?:^|;\s*)_ttp=([^;]+)/
@@ -548,26 +525,18 @@
           : null;
 
       } catch (error) {
-
         return null;
-
       }
-
     }
-
 
     /*
       بيانات المستخدم
     */
     function getTikTokUserData() {
-
       const user = {};
 
-      const ttclid =
-        getTTCLID();
-
-      const ttp =
-        getTTP();
+      const ttclid = getTTCLID();
+      const ttp = getTTP();
 
       if (ttclid) {
         user.ttclid = ttclid;
@@ -578,26 +547,23 @@
       }
 
       return user;
-
     }
 
-
     /*
-      الزران العلوي والسفلي (واتساب)
+      تسجيل ClickButton و Contact
+      على الزرين العلوي والسفلي
     */
     function trackWhatsAppClick() {
 
-      const eventIdCheckout =
+      const eventIdClickButton =
         generateEventId();
 
       const eventIdContact =
         generateEventId();
 
-
       const eventData = {
 
         contents: [{
-
           content_id:
             "glamour_beauty_whatsapp",
 
@@ -607,7 +573,6 @@
           quantity: 1,
 
           price: 20
-
         }],
 
         value: 20,
@@ -615,27 +580,25 @@
         currency: "USD",
 
         source: "WhatsApp_Button"
-
       };
-
 
       /*
         Browser Pixel
       */
       if (window.ttq) {
+
         ttq.track(
-          "InitiateCheckout",
+          "ClickButton",
 
           Object.assign(
             {
               event_id:
-                eventIdCheckout
+                eventIdClickButton
             },
 
             eventData
           )
         );
-
 
         ttq.track(
           "Contact",
@@ -646,16 +609,12 @@
           }
         );
       }
-
     }
-
 
     /*
       منع الضغط المتكرر السريع
     */
-    let whatsappClickLocked =
-      false;
-
+    let whatsappClickLocked = false;
 
     function handleWhatsAppClick(e) {
 
@@ -669,14 +628,11 @@
 
       setTimeout(
         () => {
-          whatsappClickLocked =
-            false;
+          whatsappClickLocked = false;
         },
         1500
       );
-
     }
-
 
     /*
       الزر العلوي
@@ -688,7 +644,6 @@
       );
     }
 
-
     /*
       الزر السفلي
     */
@@ -698,7 +653,6 @@
         handleWhatsAppClick
       );
     }
-
   </script>
 
 </body>
